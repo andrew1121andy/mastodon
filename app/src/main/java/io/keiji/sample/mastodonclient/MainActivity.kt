@@ -1,8 +1,6 @@
-
+package io.keiji.sample.mastodonclient
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.keiji.sample.mastodonclient.MainFragment
-import io.keiji.sample.mastodonclient.R
 
 class MainActivity : AppCompatActivity() {
 
