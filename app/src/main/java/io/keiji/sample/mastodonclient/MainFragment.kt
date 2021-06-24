@@ -9,6 +9,8 @@ import retrofit2.Retrofit
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
