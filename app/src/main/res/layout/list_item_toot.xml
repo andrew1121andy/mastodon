@@ -26,9 +26,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/user_name"
-    tools:text="ちなみに今日の時点でのAndroid Studioから見えるバージョン別シェア。
-　　　よくよく考えたらAndroid Pieの記憶がないので、Android Studioが表示してるデータはかなり
-　　　古い。" />
+    tools:text="ちなみに今日の時点でのAndroid Studioから見えるバージョン別シェア。よくよく考えたらAndroid Pieの記憶がないので、Android Studioが表示してるデータはかなり古い。" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

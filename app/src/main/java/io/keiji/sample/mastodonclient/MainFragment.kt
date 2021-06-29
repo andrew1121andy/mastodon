@@ -50,6 +50,7 @@ private val moshi = Moshi.Builder()
         super.onDestroyView()
 
         binding?.unbind()
+    }
 
     private suspend fun showTootList(
         tootList: List<Toot>
@@ -59,5 +60,4 @@ private val moshi = Moshi.Builder()
         binding.button.text = accountNameList.joinToString ("\n")
     }
 
-    }
 }
