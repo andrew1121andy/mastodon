@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="toot"
+            type="io.keiji.sample.mastodonclient.Toot" />
+    </data>
+
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -11,9 +18,9 @@
 
 <TextView
     android:id="@+id/user_name"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:text="@{toot.account.username}"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -23,11 +30,23 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:spannedContent="@{toot.content}"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/user_name"
-    tools:text="ちなみに今日の時点でのAndroid Studioから見えるバージョン別シェア。よくよく考えたらAndroid Pieの記憶がないので、Android Studioが表示してるデータはかなり古い。" />
+    app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+<androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/image"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/content"
+    app:media="@{toot.topMedia}"
+    tools:src="@mipmap/ic_launcher" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
 </layout>
+
 
