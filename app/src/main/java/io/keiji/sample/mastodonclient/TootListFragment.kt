@@ -102,7 +102,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     private suspend fun showProgress() = withContext(Dispatchers.Main) {
         binding?.swipeRefreshLayout?.isRefreshing = true
     }
-    private fun dismissProgress() = withContext(Dispatchers.Main) {
+    private suspend fun dismissProgress() = withContext(Dispatchers.Main) {
         binding?.swipeRefreshLayout?.isRefreshing = false
     }
 
