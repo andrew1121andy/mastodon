@@ -95,6 +95,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             loadNext()
         }
 
+        isLoading.observe(viewLifecycleOwner, Observer {
+            binding?.swipeRefreshLayout?.isRefreshing = it
+        })
+
         loadNext()
     }
 
