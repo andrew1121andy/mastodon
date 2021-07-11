@@ -71,12 +71,16 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         }
     }
 
-    private val tootList = ArrayList<Toot>()
+    private val tootList = MutableLiveData<ArrayList<Toot>>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = TootListAdapter(layoutInflater, tootList)
+        val tootListSnapshot = tootList.value ?: ArrayList<Toot>().also {
+            tootList.value = it
+        }
+
+        adapter = TootListAdapter(layoutInflater,tootListSnapshot)
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -91,12 +95,15 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             it.addOnScrollListener(loadNextScrollListener)
         }
         bindingData.swipeRefreshLayout.setOnRefreshListener {
-            tootList.clear()
+            tootListSnapshot.clear()
             loadNext()
         }
 
         isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
+        })
+        tootList.observe(viewLifecycleOwner, Observer {
+            adapter.notifyDataSetChanged()
         })
 
         loadNext()
@@ -115,9 +122,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
             isLoading.postValue(true)
 
+            val tootListSnapshot = tootList.value ?: ArrayList()
+
             val tootListResponse = withContext(Dispatchers.IO) {
                 api.fetchPublicTimeline(
-                    maxId = tootList.lastOrNull()?.id,
+                    maxid = tootListSnapshot.lastOrNull()?.id,
                     onlyMedia = true
                 )
             }
@@ -125,11 +134,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
             Thread.sleep(10 * 10000)
 
-            tootList.addAll(tootListResponse.filter { !it.sensitive})
+            tootListSnapshot.addAll(tootListResponse.filter { !it.sensitive })
             Log.d(TAG, "addAll")
 
-            reloadTootList()
-            Log.d(TAG, "reloadTootList")
+            tootList.postValue(tootListSnapshot)
 
 
             hasNext.set(tootListResponse.isNotEmpty())
@@ -137,8 +145,6 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             Log.d(TAG, "dismissProgress")
         }
     }
-    private suspend fun reloadTootList() = withContext(Dispatchers.Main) {
-        adapter.notifyDataSetChanged()
-    }
+
 
 }
