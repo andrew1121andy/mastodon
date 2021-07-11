@@ -1,15 +1,18 @@
 package io.keiji.sample.mastodonclient
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,12 +40,13 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     private val api = retrofit.create(MastodonApi::class.java)
 
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
 
     private lateinit var adapter: TootListAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
-    private var isLoading =AtomicBoolean()
+
+    private var isLoading = AtomicBoolean<Boolean>()
     private var hasNext = AtomicBoolean().apply { set(true) }
 
     private var loadNextScrollListener = object : RecyclerView.
@@ -50,7 +54,8 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx,dy)
-            if (isLoading.get() || !hasNext.get()) {
+                val isLoadingSnapshot = isLoading.value ?: return
+                if (isLoadingSnapshot || !hasNext.get()) {
                 return
             }
 
@@ -99,28 +104,33 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         binding?.unbind()
     }
 
-    private suspend fun showProgress() = withContext(Dispatchers.Main) {
-        binding?.swipeRefreshLayout?.isRefreshing = true
-    }
-    private suspend fun dismissProgress() = withContext(Dispatchers.Main) {
-        binding?.swipeRefreshLayout?.isRefreshing = false
-    }
+
 
     private fun loadNext() {
-        coroutineScope.launch {
-            isLoading.set(true)
-            showProgress()
+        lifecycleScope.launch {
 
-            val tootListResponse = api.fetchPublicTimeline(
-                maxId = tootList.lastOrNull()?.id,
-                onlyMedia = true
-            )
+            isLoading.postValue(true)
+
+            val tootListResponse = withContext(Dispatchers.IO) {
+                api.fetchPublicTimeline(
+                    maxId = tootList.lastOrNull()?.id,
+                    onlyMedia = true
+                )
+            }
+            Log.d(TAG, "fetchPublicTimeline")
+
+            Thread.sleep(10 * 10000)
+
             tootList.addAll(tootListResponse.filter { !it.sensitive})
-            reloadTootList()
+            Log.d(TAG, "addAll")
 
-            isLoading.set(false)
+            reloadTootList()
+            Log.d(TAG, "reloadTootList")
+
+
             hasNext.set(tootListResponse.isNotEmpty())
-            dismissProgress()
+            isLoading.postValue(false)
+            Log.d(TAG, "dismissProgress")
         }
     }
     private suspend fun reloadTootList() = withContext(Dispatchers.Main) {
