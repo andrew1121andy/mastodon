@@ -10,14 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list) {
@@ -30,14 +26,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
     private var binding: FragmentTootListBinding? = null
 
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(API_BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
-    private val api = retrofit.create(MastodonApi::class.java)
+    private val tootRepository = TootRepository(API_BASE_URL)
 
 
 
@@ -46,7 +35,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     private lateinit var layoutManager: LinearLayoutManager
 
 
-    private var isLoading = AtomicBoolean<Boolean>()
+    private var isLoading = MutableLiveData<Boolean>()
     private var hasNext = AtomicBoolean().apply { set(true) }
 
     private var loadNextScrollListener = object : RecyclerView.
@@ -124,12 +113,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
             val tootListSnapshot = tootList.value ?: ArrayList()
 
-            val tootListResponse = withContext(Dispatchers.IO) {
-                api.fetchPublicTimeline(
-                    maxid = tootListSnapshot.lastOrNull()?.id,
-                    onlyMedia = true
-                )
-            }
+            val tootListResponse = tootRepository.fetchPublicTimeline(
+                maxid = tootListSnapshot.lastOrNull()?.id,
+                onlyMedia = true
+            )
             Log.d(TAG, "fetchPublicTimeline")
 
             Thread.sleep(10 * 10000)

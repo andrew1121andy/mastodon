@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 
 
 @BindingAdapter("spannedContent")
-fun TextView.setSpannedString(content: String) {
+fun TextView.setSpannedString(content: String?) {
     text = HtmlCompat.fromHtml(
-        content,
+        content?:"",
         HtmlCompat.FROM_HTML_MODE_COMPACT
     )
 }
