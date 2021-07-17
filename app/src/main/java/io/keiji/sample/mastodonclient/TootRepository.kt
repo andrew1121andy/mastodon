@@ -30,7 +30,4 @@ class TootRepository(
         )
     }
 
-    fun fetchPublicTimeline(maxId: String?, onlyMedia: Boolean): List<Toot> {
-
-    }
 }
