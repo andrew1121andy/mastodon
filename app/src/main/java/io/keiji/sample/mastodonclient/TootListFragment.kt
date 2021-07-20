@@ -17,26 +17,21 @@ import kotlinx.coroutines.withContext
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
-    companion object {
-        val TAG = TootListFragment::class.java.simpleName
-
-        private const val API_BASE_URL = "https://androidbook2020.keiji.io"
-    }
-
     private var binding: FragmentTootListBinding? = null
 
     private lateinit var adapter: TootListAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
     private val viewModel: TootListViewModel by ViewModels {
-        TootListViewModelFactory(
+        TootViewModelFactory(
             API_BASE_URL,
             lifecycleScope,
             requireContext()
         )
     }
 
-    private var loadNextScrollListener = object : RecyclerView.OnScrollListener() {
+    private val loadNextScrollListener = object : RecyclerView.OnScrollListener()
+    {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx,dy)
@@ -58,19 +53,20 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tootListSnapshot = viewModel.tootList.value ?: ArrayList<Toot>() .also {
+        val tootListSnapshot = viewModel.tootList.value ?: ArrayList<Toot>().also {
             viewModel.tootList.value = it
         }
 
 
-        adapter = TootListAdapter(layoutInflater,tootListSnapshot)
+        adapter = TootListAdapter(layoutInflater, tootListSnapshot)
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
-            false)
+            false
+        )
         val bindingData: FragmentTootListBinding? = DataBindingUtil.bind(view)
         binding = bindingData ?: return
 
@@ -81,27 +77,18 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         }
         bindingData.swipeRefreshLayout.setOnRefreshListener {
             viewModel.clear()
-        viewModel.loadNext()
+            viewModel.loadNext()
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner,Observer{
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
         })
-        viewModel.tootList.observe(viewLifecycleOwner,Observer{
+        viewModel.tootList.observe(viewLifecycleOwner, Observer {
             adapter.notifyDataSetChanged()
         })
 
-        viewLifecycleOwner.lifecycle.addObserver(viewModel)
+        viewModel.loadNext()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        binding?.unbind()
-    }
-
-
-
     private fun loadNext() {
         lifecycleScope.launch {
 
