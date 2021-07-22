@@ -12,10 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list) {
+
+    companion object {
+        val TAG = TootListFragment::class.java.simpleName
+
+        private const val API_BASE_URL = "https://androidbook2020.keiji.io"
+    }
+
 
     private var binding: FragmentTootListBinding? = null
 
@@ -43,8 +49,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
 
             val visibleItemCount = recyclerView.childCount
             val totalItemCount = layoutManager.itemCount
-            val firstVisibleItemPosition = layoutManager.
-            findFirstVisibleItemPosition()
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
             if ((totalItemCount - visibleItemCount) <= firstVisibleItemPosition) {
                 viewModel.loadNext()
@@ -88,6 +93,12 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         })
 
         viewModel.loadNext()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding?.unbind()
     }
     private fun loadNext() {
         lifecycleScope.launch {
