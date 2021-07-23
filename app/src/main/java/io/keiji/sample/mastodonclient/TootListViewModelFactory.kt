@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
 
-class TootViewModelFactory(
+class TootListViewModelFactory(
         private val instanceUrl: String,
         private val coroutineScope: CoroutineScope,
         private val context: Context
