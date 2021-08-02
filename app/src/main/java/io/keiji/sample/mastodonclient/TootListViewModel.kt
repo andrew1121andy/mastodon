@@ -48,6 +48,7 @@ class TootListViewModel(
             isLoading.postValue(true)
 
             val tootListSnapshot = tootList.value ?: ArrayList()
+
             val maxId = tootListSnapshot.lastOrNull()?.id
             val tootListResponse = tootRepository.fetchHomeTimeLine(
                 maxId = maxId
