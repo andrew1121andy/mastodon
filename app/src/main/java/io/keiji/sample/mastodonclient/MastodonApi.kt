@@ -11,9 +11,14 @@ interface MastodonApi {
         @Query("only_media") onlyMedia: Boolean = false
     ): List<Toot>
 
-    @GET("api/vl/timelines/home")
+    @GET("api/v1/timelines/home")
     suspend fun fetchHomeTimeline(
         @Header("Authorization") accessToken: String,
         @Query("max_id") maxId: String? = null
     ): List<Toot>
+
+    @GET("api/vl/accounts/verify_credentials")
+    suspend fun verifyAccountCredential(
+        @Header("Authorization") accessToken: String
+    ) : Account
 }
