@@ -64,7 +64,7 @@ class TootDetailFragment : Fragment(R.layout.fragment_toot_detail) {
         }
 
         bindingData.recyclerView.layoutManager = LinearLayoutManager(
-            requireContext().
+            requireContext(),
             LinearLayoutManager.HORIZONTAL,
             false
         )
