@@ -41,7 +41,7 @@ class TootListAdapter(
 
     class ViewHolder(
         private val binding: ListItemTootBinding,
-        private val callback: javax.security.auth.callback.Callback?
+        private val callback: Callback?
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(toot: Toot) {
             binding.toot = toot

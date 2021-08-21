@@ -104,13 +104,13 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         super.onDestroyView()
 
         binding?.unbind()
+    }
 
-        override fun openDetail(toot: Toot) {
-            val fragment = TootDetailFragment.newInstance(toot)
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container,fragment)
-                .addToBackStack(TootDetailFragment.TAG)
-                .commit()
-        }
+    override fun openDetail(toot: Toot) {
+        val fragment = TootDetailFragment.newInstance(toot)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container,fragment)
+            .addToBackStack(TootDetailFragment.TAG)
+            .commit()
     }
 }
