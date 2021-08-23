@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient
+package io.keiji.sample.mastodonclient.entity
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.keiji.sample.mastodonclient.databinding.FragmentMainBinding
 import retrofit2.Retrofit
-import android.util.Log
+import io.keiji.sample.mastodonclient.MastodonApi
+import io.keiji.sample.mastodonclient.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

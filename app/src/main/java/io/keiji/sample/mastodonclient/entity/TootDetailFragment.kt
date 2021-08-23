@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient
+package io.keiji.sample.mastodonclient.entity
 
 import android.os.Bundle
 import android.view.View
@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.keiji.sample.mastodonclient.MediaListAdapter
+import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootDetailBinding
 
 
@@ -24,7 +26,7 @@ class TootDetailFragment : Fragment(R.layout.fragment_toot_detail) {
             val args = Bundle() .apply {
                 putParcelable(BUNDLE_KEY_TOOT, toot)
             }
-            return TootDetailFragment() .apply {
+            return TootDetailFragment().apply {
                 arguments = args
             }
         }
@@ -68,7 +70,9 @@ class TootDetailFragment : Fragment(R.layout.fragment_toot_detail) {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        bindingData.recyclerView.adapter = MediaListAdapter(layoutInflater).also {
+        bindingData.recyclerView.adapter = MediaListAdapter(
+            layoutInflater
+        ).also {
             adapter = it
         }
 

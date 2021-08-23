@@ -7,7 +7,7 @@
 
         <variable
             name="toot"
-            type="io.keiji.sample.mastodonclient.Toot" />
+            type="io.keiji.sample.mastodonclient.entity.Toot" />
     </data>
 
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        tools:context=".MainActivity">
+        tools:context=".entity.MainActivity">
 
         <TextView
             android:id="@+id/user_name"

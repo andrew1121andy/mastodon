@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient
+package io.keiji.sample.mastodonclient.entity
 
 import android.os.Bundle
 import android.view.View
@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.keiji.sample.mastodonclient.BuildConfig
+import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
@@ -62,7 +64,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             viewModel.tootList.value = it
         }
 
-        adapter = TootListAdapter(layoutInflater, tootListSnapshot,this)
+        adapter = TootListAdapter(
+            layoutInflater,
+            tootListSnapshot,
+            this
+        )
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,

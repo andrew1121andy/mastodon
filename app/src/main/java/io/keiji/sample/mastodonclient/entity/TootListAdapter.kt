@@ -1,11 +1,11 @@
-package io.keiji.sample.mastodonclient
+package io.keiji.sample.mastodonclient.entity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.ListItemTootBinding
-import javax.security.auth.callback.Callback
 
 class TootListAdapter(
     private val layoutInflater: LayoutInflater,
@@ -29,7 +29,10 @@ class TootListAdapter(
             parent,
             false
         )
-        return ViewHolder(binding,callback)
+        return ViewHolder(
+            binding,
+            callback
+        )
     }
 
     override fun onBindViewHolder(
