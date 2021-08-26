@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient.entity
+package ui.toot_list
 
 import android.os.Bundle
 import android.view.View
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import io.keiji.sample.mastodonclient.BuildConfig
 import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
+import io.keiji.sample.mastodonclient.entity.Account
+import io.keiji.sample.mastodonclient.entity.Toot
+import ui.toot_detail.TootDetailFragment
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
     TootListAdapter.Callback {
@@ -64,11 +67,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             viewModel.tootList.value = it
         }
 
-        adapter = TootListAdapter(
-            layoutInflater,
-            tootListSnapshot,
-            this
-        )
+        adapter = TootListAdapter(layoutInflater, tootListSnapshot, this)
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,

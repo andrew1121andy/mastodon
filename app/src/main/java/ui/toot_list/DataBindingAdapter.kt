@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient
+package ui.toot_list
 
 import android.widget.ImageView
 import android.widget.TextView

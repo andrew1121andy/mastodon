@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient.entity
+package ui.toot_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.ListItemTootBinding
+import io.keiji.sample.mastodonclient.entity.Toot
 
 class TootListAdapter(
     private val layoutInflater: LayoutInflater,
@@ -29,10 +30,7 @@ class TootListAdapter(
             parent,
             false
         )
-        return ViewHolder(
-            binding,
-            callback
-        )
+        return ViewHolder(binding, callback)
     }
 
     override fun onBindViewHolder(

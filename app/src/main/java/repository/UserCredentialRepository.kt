@@ -1,7 +1,8 @@
-package io.keiji.sample.mastodonclient.entity
+package repository
 
 import android.app.Application
 import io.keiji.sample.mastodonclient.BuildConfig
+import io.keiji.sample.mastodonclient.entity.UserCredential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
