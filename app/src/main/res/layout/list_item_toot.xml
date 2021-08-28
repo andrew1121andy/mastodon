@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        tools:context="ui.toot_list.MainActivity">
+        tools:context="io.keiji.sample.mastodonclient.ui.toot_list.MainActivity">
 
         <TextView
             android:id="@+id/user_name"

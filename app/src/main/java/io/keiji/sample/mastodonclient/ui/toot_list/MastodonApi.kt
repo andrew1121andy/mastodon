@@ -1,4 +1,4 @@
-package ui.toot_list
+package io.keiji.sample.mastodonclient.ui.toot_list
 
 import io.keiji.sample.mastodonclient.entity.Account
 import io.keiji.sample.mastodonclient.entity.Toot

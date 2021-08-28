@@ -1,8 +1,8 @@
-package repository
+package io.keiji.sample.mastodonclient.repository
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import ui.toot_list.MastodonApi
+import io.keiji.sample.mastodonclient.ui.toot_list.MastodonApi
 import io.keiji.sample.mastodonclient.entity.UserCredential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

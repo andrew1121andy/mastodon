@@ -1,4 +1,4 @@
-package repository
+package io.keiji.sample.mastodonclient.repository
 
 import android.app.Application
 import io.keiji.sample.mastodonclient.BuildConfig

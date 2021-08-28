@@ -1,4 +1,4 @@
-package ui.toot_detail
+package io.keiji.sample.mastodonclient.ui.toot_detail
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

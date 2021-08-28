@@ -1,4 +1,4 @@
-package ui.toot_list
+package io.keiji.sample.mastodonclient.ui.toot_list
 
 import android.os.Bundle
 import android.view.View
@@ -15,7 +15,7 @@ import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
 import io.keiji.sample.mastodonclient.entity.Account
 import io.keiji.sample.mastodonclient.entity.Toot
-import ui.toot_detail.TootDetailFragment
+import io.keiji.sample.mastodonclient.ui.toot_detail.TootDetailFragment
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
     TootListAdapter.Callback {

@@ -1,4 +1,4 @@
-package ui.toot_list
+package io.keiji.sample.mastodonclient.ui.toot_list
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -11,9 +11,9 @@ import io.keiji.sample.mastodonclient.entity.Toot
 import io.keiji.sample.mastodonclient.entity.UserCredential
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import repository.AccountRepository
-import repository.TootRepository
-import repository.UserCredentialRepository
+import io.keiji.sample.mastodonclient.repository.AccountRepository
+import io.keiji.sample.mastodonclient.repository.TootRepository
+import io.keiji.sample.mastodonclient.repository.UserCredentialRepository
 
 class TootListViewModel(
     private val instanceUrl: String,
