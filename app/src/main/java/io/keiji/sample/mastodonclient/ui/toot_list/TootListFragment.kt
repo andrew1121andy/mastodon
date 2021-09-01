@@ -15,13 +15,26 @@ import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
 import io.keiji.sample.mastodonclient.entity.Account
 import io.keiji.sample.mastodonclient.entity.Toot
-import io.keiji.sample.mastodonclient.ui.toot_detail.TootDetailFragment
+import io.keiji.sample.mastodonclient.ui.toot_detail.TootDetailActivity
+import io.keiji.sample.mastodonclient.ui.toot_edit.TootEditActivity
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
     TootListAdapter.Callback {
 
     companion object {
         val TAG = TootListFragment::class.java.simpleName
+
+        private const val BUNDLE_KEY_TIMELINE_TYPE_ORDINAL = "timeline_type_ordinal"
+
+        @JvmStatic
+        fun newInstance(timelineType: TimelineType) : TootListFragment {
+            val args = Bundle() .apply {
+                putInt(BUNDLE_KEY_TIMELINE_TYPE_ORDINAL, timelineType.ordinal)
+            }
+            return TootListFragment() .apply {
+                arguments = args
+            }
+        }
 
 
     }
@@ -31,10 +44,24 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     private lateinit var adapter: TootListAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
+    private var timelineType = TimelineType.PublicTimeline
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireArguments() .also {
+            val typeOrdinal = it.getInt(
+                BUNDLE_KEY_TIMELINE_TYPE_ORDINAL,
+                TimelineType.PublicTimeline.ordinal
+            )
+            timelineType = TimelineType.values()[typeOrdinal]
+        }
+    }
+
     private val viewModel: TootListViewModel by viewModels {
         TootListViewModelFactory(
             BuildConfig.INSTANCE_URL,
             BuildConfig.USERNAME,
+            timelineType,
             lifecycleScope,
             requireContext()
         )
@@ -84,6 +111,9 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             viewModel.clear()
             viewModel.loadNext()
         }
+        bindingData.fab.setOnClickListener{
+            launchTootEditActivity()
+        }
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
@@ -96,6 +126,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         })
 
         viewLifecycleOwner.lifecycle.addObserver(viewModel)
+    }
+
+    private fun launchTootEditActivity() {
+        val intent = TootEditActivity.newIntent(requireContext())
+        startActivity(intent)
     }
 
     private fun showAccountInfo(accountInfo: Account) {
@@ -112,10 +147,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     }
 
     override fun openDetail(toot: Toot) {
-        val fragment = TootDetailFragment.newInstance(toot)
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container,fragment)
-            .addToBackStack(TootDetailFragment.TAG)
-            .commit()
+        val intent = TootDetailActivity.newIntent(requireContext(),toot)
+        startActivity(intent)
     }
 }

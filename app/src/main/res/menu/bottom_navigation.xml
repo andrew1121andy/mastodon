@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
+        android:icon="@drawable/ic_person_black_24dp"
         android:title="User" />
     <item
         android:id="@+id/menu_public"
+        android:icon="@drawable/ic_public_black_24dp"
         android:title="public" />
 </menu>
