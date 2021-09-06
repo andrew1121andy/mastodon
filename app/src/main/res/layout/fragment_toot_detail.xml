@@ -7,7 +7,7 @@
 
         <variable
             name="toot"
-            type="io.keiji.sample.mastodonclient.entity.Toot" />
+            type="io.keiji.sample.mastodonclient.Toot" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,16 +55,16 @@
             tools:text="ちなみに今日の時点でのAndroido　Studioから見えるバージョン別シェア。よくよく考えたらAndroido　Pie
 の記載がないので、Androido　Studioが表示しているデータはかなり古い。" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="256dp"
-            android:layout_marginTop="16dp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/content"
-            tools:listitem="@layout/list_item_media" />
-
+            app:media="@{toot.topMedia}"
+            tools:src="@mipmap/ic_launcher" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
