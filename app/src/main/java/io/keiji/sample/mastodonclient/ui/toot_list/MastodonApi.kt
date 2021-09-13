@@ -28,7 +28,7 @@ interface MastodonApi {
     ) : Account
 
     @FormUrlEncoded
-    @POST("api/vl/statuses")
+    @POST("api/v1/statuses")
     suspend fun postToot(
         @Header("Authorization") accessToken: String,
         @Field("status") status: String
