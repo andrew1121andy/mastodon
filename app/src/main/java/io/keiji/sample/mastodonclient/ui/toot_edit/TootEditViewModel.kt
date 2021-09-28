@@ -21,6 +21,8 @@ class TootEditViewModel (
 
     val status = MutableLiveData<String>()
 
+    val loginRequired = MutableLiveData<Boolean>()
+
     val postComplete = MutableLiveData<Boolean> ()
     val errorMessage = MutableLiveData<String>()
 

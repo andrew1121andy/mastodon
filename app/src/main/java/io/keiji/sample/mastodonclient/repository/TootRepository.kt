@@ -50,5 +50,11 @@ class TootRepository(
             status
         )
     }
+    suspend fun delete(id: String) = withContext(Dispatchers.IO) {
+        api.deleteToot(
+            "Bearer ${userCredential.acccessToken}",
+                         id
+        )
+    }
 
 }

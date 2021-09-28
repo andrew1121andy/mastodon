@@ -17,6 +17,7 @@ import io.keiji.sample.mastodonclient.R
 import io.keiji.sample.mastodonclient.databinding.FragmentTootListBinding
 import io.keiji.sample.mastodonclient.entity.Account
 import io.keiji.sample.mastodonclient.entity.Toot
+import io.keiji.sample.mastodonclient.ui.login.LoginActivity
 import io.keiji.sample.mastodonclient.ui.toot_detail.TootDetailActivity
 import io.keiji.sample.mastodonclient.ui.toot_edit.TootEditActivity
 
@@ -27,6 +28,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         val TAG = TootListFragment::class.java.simpleName
 
         private const val REQUEST_CODE_TOOT_EDIT =0x01
+        private const val REQUEST_CODE_LOGIN = 0x02
 
         private const val BUNDLE_KEY_TIMELINE_TYPE_ORDINAL = "timeline_type_ordinal"
 
@@ -119,6 +121,12 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             launchTootEditActivity()
         }
 
+        viewModel.loginRequired.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                launchLoginActivity()
+            }
+        })
+
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
         })
@@ -132,6 +140,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         viewLifecycleOwner.lifecycle.addObserver(viewModel)
     }
 
+    private fun launchLoginActivity() {
+        val intent = Intent (requireContext(), LoginActivity::class.java)
+        startActivityForResult (intent,REQUEST_CODE_LOGIN)
+    }
+
     private fun launchTootEditActivity() {
         val intent = TootEditActivity.newIntent(requireContext())
         startActivityForResult(intent, REQUEST_CODE_TOOT_EDIT)
@@ -143,7 +156,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             activity.supportActionBar?.subtitle = accountInfo.username
         }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             super.onActivityResult(requestCode, resultCode, data)
 
             if (requestCode == REQUEST_CODE_TOOT_EDIT
@@ -163,5 +176,9 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     override fun openDetail(toot: Toot) {
         val intent = TootDetailActivity.newIntent(requireContext(),toot)
         startActivity(intent)
+    }
+
+    override fun delete(toot: Toot) {
+        viewModel.delete(toot)
     }
 }

@@ -29,9 +29,9 @@ class TootEditActivity : AppCompatActivity(),
                 .replace(R.id.fragment_container, fragment, TootEditFragment.TAG)
                 .commit()
         }
-        override fun onPostComplete() {
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
       }
+    override fun onPostComplete() {
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
     }

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/81803/AndroidStudioProjects/mastodon/app/src/main/res/layout/activity_login.xml" value="0.13405797101449277" />
+        <entry key="..\:/Users/81803/AndroidStudioProjects/mastodon/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/Users/81803/AndroidStudioProjects/mastodon/app/src/main/res/menu/list_item_toot.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
